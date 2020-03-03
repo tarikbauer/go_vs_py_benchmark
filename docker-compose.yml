@@ -1,8 +1,9 @@
-version: "3"
+version: "3.6"
 
 services:
   python_sanic:
     image: python_sanic
+    container_name: python_sanic_service
     build:
       context: python_sanic
       dockerfile: Dockerfile
@@ -12,6 +13,7 @@ services:
 
   go_grpc:
     image: go_grpc
+    container_name: go_grpc_service
     build:
       context: go_grpc
       dockerfile: Dockerfile
@@ -21,6 +23,7 @@ services:
 
   go_mux:
     image: go_mux
+    container_name: go_mux_service
     build:
       context: go_mux
       dockerfile: Dockerfile
