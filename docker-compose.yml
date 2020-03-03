@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  python_sanic:
+    image: python_sanic
+    build:
+      context: python_sanic
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "${SANIC_PORT}:${SANIC_PORT}"
+
+  go_grpc:
+    image: go_grpc
+    build:
+      context: go_grpc
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "${GO_GRPC_PORT}:${GO_GRPC_PORT}"
+
+  go_mux:
+    image: go_mux
+    build:
+      context: go_mux
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "${GO_MUX_PORT}:${GO_MUX_PORT}"
