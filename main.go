@@ -17,7 +17,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-const ITERATIONS int = 20
+const ITERATIONS int = 50
 var VALUES = "1,1,1,1"
 
 type InvalidResponse struct{}
