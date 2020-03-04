@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/joho/godotenv"
+	"github.com/tarikbauer/go_vs_py_benchmark/client/helper"
 	"google.golang.org/grpc"
 )
 
@@ -52,8 +53,7 @@ func main() {
 		helper.RESTConn{getRESTConn()},
 	}
 	goGRPCBenchmark := helper.BenchMark{
-		VALUES, "Go GRPC",
-		ITERATIONS,
+		VALUES, ITERATIONS, "Go GRPC",
 		make(chan float64, ITERATIONS),
 		sync.WaitGroup{},
 		helper.GRPCConn{getGRPCConn()},

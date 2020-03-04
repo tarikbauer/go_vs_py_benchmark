@@ -2,11 +2,12 @@ package helper
 
 import (
 	"context"
-	"go_grpc/api"
 	"google.golang.org/grpc"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/tarikbauer/go_vs_py_benchmark/go_grpc/api"
 )
 
 type GRPCConn struct {
