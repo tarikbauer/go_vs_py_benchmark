@@ -13,7 +13,7 @@ type Server struct {}
 
 func Sleep(t int64, c chan <- int64, wg *sync.WaitGroup) {
 	defer wg.Done()
-	time.Sleep(time.Duration(t) * time.Second)
+	time.Sleep(time.Duration(t) * time.Millisecond)
 	c <- t
 }
 

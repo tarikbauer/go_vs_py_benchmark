@@ -11,8 +11,8 @@ import (
 	"google.golang.org/grpc"
 )
 
-const ITERATIONS int = 10
-var VALUES = "1,2,1,1"
+const ITERATIONS int = 20
+var VALUES = "1,2,1,1,5,1,2,3"
 
 func getUrl(port string) string {
 	return "http://127.0.0.1:" + port + "/api?t=" + VALUES

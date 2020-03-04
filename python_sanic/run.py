@@ -8,7 +8,7 @@ from sanic.response import HTTPResponse, text
 app = Sanic(__name__)
 
 async def sleep(seconds: int) -> int:
-    await asyncio.sleep(seconds)
+    await asyncio.sleep(seconds / 1000)
     return seconds
 
 @app.exception(NotFound)

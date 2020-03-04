@@ -13,12 +13,12 @@ const (
 
 func printInfo(message string, value float64) {
 	fmt.Print(message)
-	fmt.Printf(InfoColor, strconv.FormatFloat(value, 'e', -1, 64) + "\n")
+	fmt.Printf(InfoColor, strconv.FormatFloat(value, 'e', -1, 64) + "s\n")
 }
 
 func printWarning(message string, value float64) {
 	fmt.Print(message)
-	fmt.Printf(WarningColor, strconv.FormatFloat(value, 'e', -1, 64) + "\n")
+	fmt.Printf(WarningColor, strconv.FormatFloat(value, 'e', -1, 64) + "s\n")
 }
 
 func parseInput(input string) ([]int64, error) {
@@ -34,14 +34,4 @@ func parseInput(input string) ([]int64, error) {
 		values = append(values, value)
 	}
 	return values, nil
-}
-
-func max(input []int64) int64 {
-	var response int64
-	for _, value := range input {
-		if response < value {
-			response = value
-		}
-	}
-	return response
 }

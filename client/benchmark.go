@@ -48,14 +48,8 @@ func (b *BenchMark) DisplayResults() {
 
 func (b *BenchMark) GetDelay() float64 {
 	var delay float64
-	values, err := parseInput(b.Value)
-	if err != nil {
-		log.Fatal(err)
-	}
-	maxValue := float64(max(values))
 	for _, value := range b.Results {
-		current := value - maxValue
-		delay += current
+		delay += value
 	}
 	return delay
 }

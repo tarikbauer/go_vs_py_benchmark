@@ -28,11 +28,11 @@ Servers
 
 * All servers only have one API: ````/api?t={values}````, `values` is a list of integers joined by a comma, such as `/api?t=1,2,3,1`;
 
-* For each integer value of the query param received, the server mocks an IO asynchronously requisition, that takes the correspondent value in seconds;
+* For each integer value of the query param received, the server mocks an IO asynchronously requisition, that takes the correspondent value in milliseconds;
 
 * The project compare three different servers, written in different languages and using different protocols of communication.
 ---
-1. Written in Python and developed using Sanic as framework (REST);
+1. Written in Python and developed using Sanic (using `uvloop`) as framework (REST);
 2. Written in GO and developed using Mux as framework (REST);
 3. Written in GO and developed using GRPC.
 

@@ -27,6 +27,6 @@ func LogWarning(message interface{}) {
 
 func Sleep(t int, c chan <- int, wg *sync.WaitGroup) {
 	defer wg.Done()
-	time.Sleep(time.Duration(t) * time.Second)
+	time.Sleep(time.Duration(t) * time.Millisecond)
 	c <- t
 }
