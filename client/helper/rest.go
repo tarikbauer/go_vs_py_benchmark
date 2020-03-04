@@ -12,17 +12,17 @@ func (InvalidResponse) Error() string {
 }
 
 type RESTConn struct {
-	conn *http.Client
+	Conn *http.Client
 }
 
 func (c RESTConn) Close() error {
-	c.conn.CloseIdleConnections()
+	c.Conn.CloseIdleConnections()
 	return nil
 }
 
 func (c RESTConn) fetch(input string) (float64, error) {
 	t := time.Now()
-	response, err := c.conn.Get(input)
+	response, err := c.Conn.Get(input)
 	elapsed := time.Since(t)
 	if err != nil{
 		return 0, err

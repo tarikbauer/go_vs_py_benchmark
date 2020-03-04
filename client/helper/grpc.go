@@ -11,11 +11,11 @@ import (
 )
 
 type GRPCConn struct {
-	conn *grpc.ClientConn
+	Conn *grpc.ClientConn
 }
 
 func (c GRPCConn) Close() error {
-	err := c.conn.Close()
+	err := c.Conn.Close()
 	if err != nil {
 		return err
 	}
@@ -24,7 +24,7 @@ func (c GRPCConn) Close() error {
 
 func (c GRPCConn) fetch(input string) (float64, error) {
 	var values []int64
-	client := api.NewTimeEvaluationClient(c.conn)
+	client := api.NewTimeEvaluationClient(c.Conn)
 	for _, value := range strings.Split(input, ",") {
 		value, err := strconv.ParseInt(value, 10, 64)
 		if err != nil {

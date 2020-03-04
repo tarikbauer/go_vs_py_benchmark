@@ -37,31 +37,31 @@ func main() {
 	}
 
 	pythonSanicBenchmark := helper.BenchMark{
-		getUrl(os.Getenv("SANIC_PORT")),
-		ITERATIONS,
-		"Sanic",
-		make(chan float64, ITERATIONS),
-		sync.WaitGroup{},
-		helper.RESTConn{getRESTConn()},
+		Value: getUrl(os.Getenv("SANIC_PORT")),
+		Iterations: ITERATIONS,
+		Name: "Sanic",
+		Channel: make(chan float64, ITERATIONS),
+		WG: sync.WaitGroup{},
+		Client: helper.RESTConn{Conn: getRESTConn()},
 	}
 	goMuxBenchmark := helper.BenchMark{
-		getUrl(os.Getenv("GO_MUX_PORT")),
-		ITERATIONS,
-		"Go Mux",
-		make(chan float64, ITERATIONS),
-		sync.WaitGroup{},
-		helper.RESTConn{getRESTConn()},
+		Value: getUrl(os.Getenv("GO_MUX_PORT")),
+		Iterations: ITERATIONS,
+		Name: "Go Mux",
+		Channel: make(chan float64, ITERATIONS),
+		WG: sync.WaitGroup{},
+		Client: helper.RESTConn{Conn: getRESTConn()},
 	}
 	goGRPCBenchmark := helper.BenchMark{
-		VALUES, ITERATIONS, "Go GRPC",
-		make(chan float64, ITERATIONS),
-		sync.WaitGroup{},
-		helper.GRPCConn{getGRPCConn()},
+		Value: VALUES, Iterations: ITERATIONS, Name: "Go GRPC",
+		Channel: make(chan float64, ITERATIONS),
+		WG: sync.WaitGroup{},
+		Client: helper.GRPCConn{Conn: getGRPCConn()},
 	}
-	pythonSanicBenchmark.run()
-	pythonSanicBenchmark.displayResult()
-	goMuxBenchmark.run()
-	goMuxBenchmark.displayResult()
-	goGRPCBenchmark.run()
-	goGRPCBenchmark.displayResult()
+	pythonSanicBenchmark.Run()
+	pythonSanicBenchmark.DisplayResult()
+	goMuxBenchmark.Run()
+	goMuxBenchmark.DisplayResult()
+	goGRPCBenchmark.Run()
+	goGRPCBenchmark.DisplayResult()
 }

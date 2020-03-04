@@ -13,42 +13,42 @@ type Client interface {
 }
 
 type BenchMark struct {
-	value string
-	iterations int
-	name string
-	c chan float64
-	wg sync.WaitGroup
-	client Client
+	Value      string
+	Iterations int
+	Name       string
+	Channel    chan float64
+	WG         sync.WaitGroup
+	Client     Client
 }
 
-func (b *BenchMark) evaluate(input string) {
-	defer b.wg.Done()
-	elapsed, err := b.client.fetch(input)
+func (b *BenchMark) Evaluate(input string) {
+	defer b.WG.Done()
+	elapsed, err := b.Client.fetch(input)
 	if err != nil{
-		log.Fatal(b.name + ": ", err)
+		log.Fatal(b.Name + ": ", err)
 	}
-	b.c <- elapsed
+	b.Channel <- elapsed
 }
 
-func (b *BenchMark) run() {
-	defer b.closeAll()
-	for i := 0; i < b.iterations; i++ {
-		b.wg.Add(1)
-		go b.evaluate(b.value)
+func (b *BenchMark) Run() {
+	defer b.CloseAll()
+	for i := 0; i < b.Iterations; i++ {
+		b.WG.Add(1)
+		go b.Evaluate(b.Value)
 	}
-	b.wg.Wait()
+	b.WG.Wait()
 }
 
-func (b BenchMark) displayResult() {
-	for value := range b.c {
-		fmt.Print(b.name + ": ")
+func (b BenchMark) DisplayResult() {
+	for value := range b.Channel {
+		fmt.Print(b.Name + ": ")
 		fmt.Println(value)
 	}
 }
 
-func (b *BenchMark) closeAll() {
-	close(b.c)
-	err := b.client.Close()
+func (b *BenchMark) CloseAll() {
+	close(b.Channel)
+	err := b.Client.Close()
 	if err != nil {
 		log.Fatal("Error while closing connection!")
 	}
