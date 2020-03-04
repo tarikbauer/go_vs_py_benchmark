@@ -1,11 +1,11 @@
 package main
 
 import (
-	"go_grpc/api"
 	"log"
 	"net"
 	"os"
 
+	"github.com/tarikbauer/go_vs_py_benchmark/go_grpc/api"
 	"google.golang.org/grpc"
 )
 

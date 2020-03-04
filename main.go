@@ -59,9 +59,12 @@ func main() {
 		Client:  client.GRPCConn{Conn: getGRPCConn()},
 	}
 	pythonSanicBenchmark.Run()
-	pythonSanicBenchmark.DisplayResult()
+	pythonSanicBenchmark.DisplayResults()
+	pythonSanicBenchmark.DisplayTotalDelay()
 	goMuxBenchmark.Run()
-	goMuxBenchmark.DisplayResult()
+	goMuxBenchmark.DisplayResults()
+	goMuxBenchmark.DisplayTotalDelay()
 	goGRPCBenchmark.Run()
-	goGRPCBenchmark.DisplayResult()
+	goGRPCBenchmark.DisplayResults()
+	goGRPCBenchmark.DisplayTotalDelay()
 }

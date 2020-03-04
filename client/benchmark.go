@@ -1,9 +1,9 @@
 package client
 
 import (
-	"fmt"
 	"io"
 	"log"
+	"math"
 	"sync"
 )
 
@@ -19,6 +19,7 @@ type BenchMark struct {
 	Channel    chan float64
 	WG         sync.WaitGroup
 	Client     Client
+	Results    []float64
 }
 
 func (b *BenchMark) Evaluate(input string) {
@@ -27,7 +28,7 @@ func (b *BenchMark) Evaluate(input string) {
 	if err != nil{
 		log.Fatal(b.Name + ": ", err)
 	}
-	b.Channel <- elapsed
+	b.Channel <- elapsed / math.Pow(10, 9)
 }
 
 func (b *BenchMark) Run() {
@@ -39,14 +40,38 @@ func (b *BenchMark) Run() {
 	b.WG.Wait()
 }
 
-func (b BenchMark) DisplayResult() {
+func (b *BenchMark) DisplayResults() {
+	for _, value := range b.Results {
+		printWarning(b.Name + ": ", value)
+	}
+}
+
+func (b *BenchMark) GetDelay() float64 {
+	var delay float64
+	values, err := parseInput(b.Value)
+	if err != nil {
+		log.Fatal(err)
+	}
+	maxValue := float64(max(values))
+	for _, value := range b.Results {
+		current := value - maxValue
+		delay += current
+	}
+	return delay
+}
+
+func (b *BenchMark) DisplayTotalDelay() {
+	printInfo(b.Name + " total delay: ", b.GetDelay())
+}
+
+func (b *BenchMark) setResults() {
 	for value := range b.Channel {
-		fmt.Print(b.Name + ": ")
-		fmt.Println(value)
+		b.Results = append(b.Results, value)
 	}
 }
 
 func (b *BenchMark) CloseAll() {
+	defer b.setResults()
 	close(b.Channel)
 	err := b.Client.Close()
 	if err != nil {
