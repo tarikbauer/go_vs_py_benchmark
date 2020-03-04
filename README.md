@@ -1,3 +1,21 @@
+Requirements
+---------------
+* Docker
+ ````dockerfile
+docker-py > 3.6.0
+docker-compose > 1.23.2
+````
+
+* godotenv
+````go
+go get github.com/joho/godotenv
+````
+
+* grpc
+````go
+go get google.golang.org/grpc
+````
+
 Install
 ---------------
 ````go
