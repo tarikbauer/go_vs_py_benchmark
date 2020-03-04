@@ -11,8 +11,8 @@ import (
 	"google.golang.org/grpc"
 )
 
-const ITERATIONS int = 50
-var VALUES = "1,1,1,1"
+const ITERATIONS int = 10
+var VALUES = "1,2,1,1"
 
 func getUrl(port string) string {
 	return "http://127.0.0.1:" + port + "/api?t=" + VALUES
@@ -36,35 +36,26 @@ func main() {
 		log.Fatal("Failed loading `.env` file!")
 	}
 
-	pythonSanicBenchmark := client.BenchMark{
+	client.BenchMark{
 		Value:      getUrl(os.Getenv("SANIC_PORT")),
 		Iterations: ITERATIONS,
 		Name:       "Sanic",
 		Channel:    make(chan float64, ITERATIONS),
 		WG:         sync.WaitGroup{},
 		Client:     client.RESTConn{Conn: getRESTConn()},
-	}
-	goMuxBenchmark := client.BenchMark{
+	}.Run()
+	client.BenchMark{
 		Value:      getUrl(os.Getenv("GO_MUX_PORT")),
 		Iterations: ITERATIONS,
 		Name:       "Go Mux",
 		Channel:    make(chan float64, ITERATIONS),
 		WG:         sync.WaitGroup{},
 		Client:     client.RESTConn{Conn: getRESTConn()},
-	}
-	goGRPCBenchmark := client.BenchMark{
+	}.Run()
+	client.BenchMark{
 		Value: VALUES, Iterations: ITERATIONS, Name: "Go GRPC",
 		Channel: make(chan float64, ITERATIONS),
 		WG:      sync.WaitGroup{},
 		Client:  client.GRPCConn{Conn: getGRPCConn()},
-	}
-	pythonSanicBenchmark.Run()
-	pythonSanicBenchmark.DisplayResults()
-	pythonSanicBenchmark.DisplayTotalDelay()
-	goMuxBenchmark.Run()
-	goMuxBenchmark.DisplayResults()
-	goMuxBenchmark.DisplayTotalDelay()
-	goGRPCBenchmark.Run()
-	goGRPCBenchmark.DisplayResults()
-	goGRPCBenchmark.DisplayTotalDelay()
+	}.Run()
 }

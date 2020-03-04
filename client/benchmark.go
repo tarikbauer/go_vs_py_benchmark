@@ -31,7 +31,7 @@ func (b *BenchMark) Evaluate(input string) {
 	b.Channel <- elapsed / math.Pow(10, 9)
 }
 
-func (b *BenchMark) Run() {
+func (b *BenchMark) Work() {
 	defer b.CloseAll()
 	for i := 0; i < b.Iterations; i++ {
 		b.WG.Add(1)
@@ -77,4 +77,10 @@ func (b *BenchMark) CloseAll() {
 	if err != nil {
 		log.Fatal("Error while closing connection!")
 	}
+}
+
+func (b BenchMark) Run() {
+	b.Work()
+	b.DisplayResults()
+	b.DisplayTotalDelay()
 }
