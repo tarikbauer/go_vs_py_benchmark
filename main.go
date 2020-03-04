@@ -7,7 +7,7 @@ import (
 	"sync"
 
 	"github.com/joho/godotenv"
-	"github.com/tarikbauer/go_vs_py_benchmark/client/helper"
+	"github.com/tarikbauer/go_vs_py_benchmark/client"
 	"google.golang.org/grpc"
 )
 
@@ -36,27 +36,27 @@ func main() {
 		log.Fatal("Failed loading `.env` file!")
 	}
 
-	pythonSanicBenchmark := helper.BenchMark{
-		Value: getUrl(os.Getenv("SANIC_PORT")),
+	pythonSanicBenchmark := client.BenchMark{
+		Value:      getUrl(os.Getenv("SANIC_PORT")),
 		Iterations: ITERATIONS,
-		Name: "Sanic",
-		Channel: make(chan float64, ITERATIONS),
-		WG: sync.WaitGroup{},
-		Client: helper.RESTConn{Conn: getRESTConn()},
+		Name:       "Sanic",
+		Channel:    make(chan float64, ITERATIONS),
+		WG:         sync.WaitGroup{},
+		Client:     client.RESTConn{Conn: getRESTConn()},
 	}
-	goMuxBenchmark := helper.BenchMark{
-		Value: getUrl(os.Getenv("GO_MUX_PORT")),
+	goMuxBenchmark := client.BenchMark{
+		Value:      getUrl(os.Getenv("GO_MUX_PORT")),
 		Iterations: ITERATIONS,
-		Name: "Go Mux",
-		Channel: make(chan float64, ITERATIONS),
-		WG: sync.WaitGroup{},
-		Client: helper.RESTConn{Conn: getRESTConn()},
+		Name:       "Go Mux",
+		Channel:    make(chan float64, ITERATIONS),
+		WG:         sync.WaitGroup{},
+		Client:     client.RESTConn{Conn: getRESTConn()},
 	}
-	goGRPCBenchmark := helper.BenchMark{
+	goGRPCBenchmark := client.BenchMark{
 		Value: VALUES, Iterations: ITERATIONS, Name: "Go GRPC",
 		Channel: make(chan float64, ITERATIONS),
-		WG: sync.WaitGroup{},
-		Client: helper.GRPCConn{Conn: getGRPCConn()},
+		WG:      sync.WaitGroup{},
+		Client:  client.GRPCConn{Conn: getGRPCConn()},
 	}
 	pythonSanicBenchmark.Run()
 	pythonSanicBenchmark.DisplayResult()
